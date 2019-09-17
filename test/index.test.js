@@ -15,15 +15,37 @@
 'use strict';
 
 const assert = require('assert');
+const AssertionError = require('assert').AssertionError;
 const proxyquire = require('proxyquire');
 const sinon = require('sinon');
+const NodeHttpAdapter = require('@pollyjs/adapter-node-http');
+const FSPersister = require('@pollyjs/persister-fs');
+const setupPolly = require('@pollyjs/core').setupMocha;
 
 describe('Index Tests', () => {
+
+  setupPolly({
+    logging: false,
+    recordFailedRequests: true,
+    recordIfMissing: false,
+    adapters: [NodeHttpAdapter],
+    persister: FSPersister,
+    persisterOptions: {
+      fs: {
+        recordingsDir: 'test/fixtures',
+      },
+    },
+    matchRequestsBy: {
+      headers: {
+        exclude: ['authorization', 'user-agent']
+      }
+    }
+  });
+
   let index;
   let invoke;
-  before(() => {
+  beforeEach(() => {
     invoke = sinon.fake();
-
     index = proxyquire('../src/index.js', {
       openwhisk: () => ({
         actions: {
@@ -32,6 +54,18 @@ describe('Index Tests', () => {
       }),
     }).main;
   });
+
+  it('index function bails if neccessary arguments are missing', async () => {
+    try {
+      await index();
+      assert.fail('this should not happen');
+    } catch (e) {
+      if (e instanceof AssertionError) {
+        throw e;
+      }
+      assert.ok(e);
+    }
+  })
 
   it('index function makes HTTP requests', async () => {
     const result = await index({
@@ -49,7 +83,39 @@ describe('Index Tests', () => {
     sinon.assert.callCount(invoke, result.jobs);
   });
 
-  it.only('index filters by pattern', async () => {
+  it('index delegates for truncated responses', async () => {
+    const result = await index({
+      owner: 'MicrosoftDocs',
+      repo: 'azure-docs',
+      ref: '0fab4c4f2940e4c7b2ac5a93fcc52d2d5f7ff367',
+      branch: 'master',
+    });
+    assert.equal(typeof result, 'object');
+    assert.deepEqual(result, {
+      delegated: 'index-big-tree',
+      jobs: 1,
+    });
+  }).timeout(10000);
+
+  it('index function makes authenticated HTTP requests', async () => {
+    const result = await index({
+      owner: 'trieloff',
+      repo: 'excelsior-ui',
+      ref: 'c1e15f0fc0edf7e504e4c55b60df996c03e64b48',
+      branch: 'master',
+      pattern: '*.html',
+      token: 'fake-and-revoked'
+    });
+    assert.equal(typeof result, 'object');
+    assert.deepEqual(result, {
+      delegated: 'update-index',
+      jobs: 2,
+    });
+
+    sinon.assert.callCount(invoke, result.jobs);
+  });
+
+  it('index filters by pattern', async () => {
     const result = await index({
       owner: 'trieloff',
       repo: 'helix-demo',

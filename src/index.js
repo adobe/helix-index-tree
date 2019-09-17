@@ -30,6 +30,9 @@ function ua() {
 function main({
   owner, repo, ref, branch, pattern = '*', token,
 } = {}) {
+  if (!(owner && repo && ref && branch)) {
+    throw new Error('Required arguments missing');
+  }
   return request(`https://api.github.com/repos/${owner}/${repo}/git/trees/${ref}?recursive=1`, {
     json: true,
     headers: {
