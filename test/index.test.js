@@ -15,16 +15,53 @@
 'use strict';
 
 const assert = require('assert');
-const index = require('../src/index.js').main;
+const proxyquire = require('proxyquire');
+const sinon = require('sinon');
 
 describe('Index Tests', () => {
-  it('index function is present', async () => {
-    const result = await index({});
-    assert.deepEqual(result, { body: 'Hello, world.' });
+  let index;
+  let invoke;
+  before(() => {
+    invoke = sinon.fake();
+
+    index = proxyquire('../src/index.js', {
+      openwhisk: () => ({
+        actions: {
+          invoke,
+        },
+      }),
+    }).main;
   });
 
-  it('index function returns an object', async () => {
-    const result = await index();
+  it('index function makes HTTP requests', async () => {
+    const result = await index({
+      owner: 'trieloff',
+      repo: 'helix-demo',
+      ref: 'ca8959afbb2668c761e47a4563f054da2444ab30',
+      branch: 'master',
+    });
     assert.equal(typeof result, 'object');
+    assert.deepEqual(result, {
+      delegated: 'update-index',
+      jobs: 13,
+    });
+
+    sinon.assert.callCount(invoke, result.jobs);
+  });
+
+  it.only('index filters by pattern', async () => {
+    const result = await index({
+      owner: 'trieloff',
+      repo: 'helix-demo',
+      ref: 'ca8959afbb2668c761e47a4563f054da2444ab30',
+      branch: 'master',
+      pattern: '**/*.{md,html}',
+    });
+    assert.equal(typeof result, 'object');
+    assert.deepEqual(result, {
+      delegated: 'update-index',
+      jobs: 7,
+    });
+    sinon.assert.callCount(invoke, result.jobs);
   });
 });
