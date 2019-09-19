@@ -58,19 +58,22 @@ function main({
     const jobs = response.tree
       .filter(({ type }) => type === 'blob')
       .filter(({ path }) => minimatch(path, pattern))
-      .map(({ path, sha }) => ow.actions.invoke({
+      .map(({ path, sha }) => {
+        ow.actions.invoke({
         name: 'helix-index/index-file@1.2.1',
         blocking: false,
         result: false,
         params: {
           owner, repo, ref, path, branch, sha, token,
         },
-      }));
+      });
+      return path;
+    });
     return {
       statusCode: 201,
       body: {
         delegated: 'update-index',
-        jobs: jobs.length,
+        jobs: jobs,
       }
     };
   });
