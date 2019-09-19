@@ -28,7 +28,7 @@ function ua() {
  * @returns {object} a greeting
  */
 function main({
-  owner, repo, ref, branch, pattern = '*', token,
+  owner, repo, ref, branch, pattern = '**/*.{md,jpg}', token,
 } = {}) {
   if (!(owner && repo && ref && branch)) {
     throw new Error('Required arguments missing');
@@ -59,7 +59,7 @@ function main({
       .filter(({ type }) => type === 'blob')
       .filter(({ path }) => minimatch(path, pattern))
       .map(({ path, sha }) => ow.actions.invoke({
-        name: 'update-index',
+        name: 'helix-index/index-file@1.2.1',
         blocking: false,
         result: false,
         params: {
@@ -67,8 +67,11 @@ function main({
         },
       }));
     return {
-      delegated: 'update-index',
-      jobs: jobs.length,
+      statusCode: 201,
+      body: {
+        delegated: 'update-index',
+        jobs: jobs.length,
+      }
     };
   });
 }
