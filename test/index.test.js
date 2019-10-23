@@ -80,7 +80,7 @@ describe('Index Tests', () => {
       statusCode: 201,
     });
 
-    sinon.assert.callCount(invoke, result.jobs);
+    sinon.assert.callCount(invoke, 1);
   });
 
   it('index delegates for truncated responses', async () => {
@@ -114,7 +114,7 @@ describe('Index Tests', () => {
       statusCode: 201,
     });
 
-    sinon.assert.callCount(invoke, result.jobs);
+    sinon.assert.callCount(invoke, 1);
   });
 
   it('index filters by pattern', async () => {
@@ -131,6 +131,6 @@ describe('Index Tests', () => {
       jobs: 7,
       statusCode: 201,
     });
-    sinon.assert.callCount(invoke, result.jobs);
+    sinon.assert.callCount(invoke, 1);
   });
 });

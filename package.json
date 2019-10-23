@@ -29,6 +29,7 @@
   "homepage": "https://github.com/adobe/helix-service#readme",
   "dependencies": {
     "@adobe/helix-status": "4.3.3",
+    "ferrum": "^1.4.1",
     "minimatch": "^3.0.4",
     "openwhisk": "^3.20.0",
     "request": "^2.88.0",

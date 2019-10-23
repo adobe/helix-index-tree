@@ -10,6 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+const {
+  chunkifyShort, flat, pipe, map, filter, count,
+} = require('ferrum');
 const { wrap } = require('@adobe/helix-status');
 const request = require('request-promise-native');
 const minimatch = require('minimatch');
@@ -28,7 +31,7 @@ function ua() {
  * @returns {object} a greeting
  */
 function main({
-  owner, repo, ref, branch, pattern = '**/*.{md,jpg}', token,
+  owner, repo, ref, branch, pattern = '**/*.{md,jpg}', token, batchsize = 100,
 } = {}) {
   if (!(owner && repo && ref && branch)) {
     throw new Error('Required arguments missing');
@@ -56,24 +59,47 @@ function main({
         statusCode: 201,
       };
     }
-    const jobs = response.tree
-      .filter(({ type }) => type === 'blob')
-      .filter(({ path }) => minimatch(path, pattern))
-      .map(({ path, sha }) => {
+
+    const jobs = pipe(
+      response.tree,
+      filter(({ type }) => type === 'blob'),
+      filter(({ path }) => minimatch(path, pattern)),
+      map(({ path }) => path),
+      chunkifyShort(batchsize),
+      map((paths) => {
         ow.actions.invoke({
           name: 'helix-index/index-file@1.2.1',
           blocking: false,
           result: false,
           params: {
-            owner, repo, ref, path, branch, sha, token,
+            owner, repo, ref, paths, branch, sha: 'initial', token,
           },
         });
-        return path;
+        return paths;
+      }),
+    );
+
+    /*
+    const jobs = chunkify(response.tree
+      .filter(({ type }) => type === 'blob')
+      .filter(({ path }) => minimatch(path, pattern))
+      .map(({path}) => path), batchsize)
+      .map(paths => {
+        ow.actions.invoke({
+          name: 'helix-index/index-file@1.2.1',
+          blocking: false,
+          result: false,
+          params: {
+            owner, repo, ref, paths, branch, sha, token,
+          },
+        });
+        return paths;
       });
+      */
     return {
       statusCode: 201,
       delegated: 'update-index',
-      jobs: jobs.length,
+      jobs: count(flat(jobs)),
     };
   });
 }
