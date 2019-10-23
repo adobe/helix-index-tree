@@ -15,7 +15,7 @@
 'use strict';
 
 const assert = require('assert');
-const AssertionError = require('assert').AssertionError;
+const { AssertionError } = require('assert');
 const proxyquire = require('proxyquire');
 const sinon = require('sinon');
 const NodeHttpAdapter = require('@pollyjs/adapter-node-http');
@@ -23,7 +23,6 @@ const FSPersister = require('@pollyjs/persister-fs');
 const setupPolly = require('@pollyjs/core').setupMocha;
 
 describe('Index Tests', () => {
-
   setupPolly({
     logging: false,
     recordFailedRequests: true,
@@ -37,9 +36,9 @@ describe('Index Tests', () => {
     },
     matchRequestsBy: {
       headers: {
-        exclude: ['authorization', 'user-agent']
-      }
-    }
+        exclude: ['authorization', 'user-agent'],
+      },
+    },
   });
 
   let index;
@@ -65,7 +64,7 @@ describe('Index Tests', () => {
       }
       assert.ok(e);
     }
-  })
+  });
 
   it('index function makes HTTP requests', async () => {
     const result = await index({
@@ -77,7 +76,8 @@ describe('Index Tests', () => {
     assert.equal(typeof result, 'object');
     assert.deepEqual(result, {
       delegated: 'update-index',
-      jobs: 13,
+      jobs: 6,
+      statusCode: 201,
     });
 
     sinon.assert.callCount(invoke, result.jobs);
@@ -94,6 +94,7 @@ describe('Index Tests', () => {
     assert.deepEqual(result, {
       delegated: 'index-big-tree',
       jobs: 1,
+      statusCode: 201,
     });
   }).timeout(10000);
 
@@ -104,12 +105,13 @@ describe('Index Tests', () => {
       ref: 'c1e15f0fc0edf7e504e4c55b60df996c03e64b48',
       branch: 'master',
       pattern: '*.html',
-      token: 'fake-and-revoked'
+      token: 'fake-and-revoked',
     });
     assert.equal(typeof result, 'object');
     assert.deepEqual(result, {
       delegated: 'update-index',
       jobs: 2,
+      statusCode: 201,
     });
 
     sinon.assert.callCount(invoke, result.jobs);
@@ -127,6 +129,7 @@ describe('Index Tests', () => {
     assert.deepEqual(result, {
       delegated: 'update-index',
       jobs: 7,
+      statusCode: 201,
     });
     sinon.assert.callCount(invoke, result.jobs);
   });

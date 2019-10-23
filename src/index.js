@@ -53,6 +53,7 @@ function main({
       return {
         delegated: 'index-big-tree',
         jobs: 1,
+        statusCode: 201,
       };
     }
     const jobs = response.tree
@@ -60,21 +61,19 @@ function main({
       .filter(({ path }) => minimatch(path, pattern))
       .map(({ path, sha }) => {
         ow.actions.invoke({
-        name: 'helix-index/index-file@1.2.1',
-        blocking: false,
-        result: false,
-        params: {
-          owner, repo, ref, path, branch, sha, token,
-        },
+          name: 'helix-index/index-file@1.2.1',
+          blocking: false,
+          result: false,
+          params: {
+            owner, repo, ref, path, branch, sha, token,
+          },
+        });
+        return path;
       });
-      return path;
-    });
     return {
       statusCode: 201,
-      body: {
-        delegated: 'update-index',
-        jobs: jobs,
-      }
+      delegated: 'update-index',
+      jobs: jobs.length,
     };
   });
 }
