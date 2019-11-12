@@ -1,3 +1,17 @@
+# 1.0.0 (2019-11-12)
+
+
+### Bug Fixes
+
+* **index:** return proper object for non web action ([d685682](https://github.com/adobe/helix-index-tree/commit/d685682))
+
+
+### Features
+
+* **index:** batch files to be indexed in groups of 100 ([4316040](https://github.com/adobe/helix-index-tree/commit/4316040))
+* **index:** simple service to retrieve git tree and trigger indexing for each matching file ([c6fecab](https://github.com/adobe/helix-index-tree/commit/c6fecab))
+* **index:** update URLs and prepare deployment ([6c87a6d](https://github.com/adobe/helix-index-tree/commit/6c87a6d))
+
 ## [1.2.1](https://github.com/adobe/helix-service/compare/v1.2.0...v1.2.1) (2019-09-03)
 
 
