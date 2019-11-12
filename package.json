@@ -19,14 +19,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/adobe/helix-service"
+    "url": "https://github.com/adobe/helix-index-tree"
   },
   "author": "",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/adobe/helix-service/issues"
+    "url": "https://github.com/adobe/helix-index-tree/issues"
   },
-  "homepage": "https://github.com/adobe/helix-service#readme",
+  "homepage": "https://github.com/adobe/helix-index-tree#readme",
   "dependencies": {
     "@adobe/helix-status": "4.3.3",
     "ferrum": "^1.4.1",
@@ -76,5 +76,12 @@
   "wsk": {
     "name": "helix-index/index-tree@${version}",
     "static": []
+  },
+  "statuspage": {
+    "name": "Helix Index Tree",
+    "group": "Publishing"
+  },
+  "newrelic": {
+    "group_policy": "Publishing Repeated Failure"
   }
 }
