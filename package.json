@@ -17,6 +17,10 @@
     "deploy-sequences": "wsk-builder --no-build -no-hints -l latest -l major -l minor",
     "deploy-ci": "wsk-builder -v --deploy  --web-export false --pkgVersion=ci$CIRCLE_BUILD_NUM -l ci"
   },
+  "wsk": {
+    "name": "helix-services-private/index-tree@${version}",
+    "linksPackage": "helix-services"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/adobe/helix-index-tree"
@@ -37,7 +41,7 @@
   },
   "devDependencies": {
     "@adobe/eslint-config-helix": "1.1.0",
-    "@adobe/openwhisk-action-builder": "2.1.0",
+    "@adobe/openwhisk-action-builder": "2.2.1",
     "@pollyjs/adapter-node-http": "2.6.2",
     "@pollyjs/core": "2.6.2",
     "@pollyjs/persister-fs": "2.6.2",
@@ -72,10 +76,6 @@
     "ghooks": {
       "pre-commit": "npx lint-staged"
     }
-  },
-  "wsk": {
-    "name": "services/index-tree@${version}",
-    "static": []
   },
   "statuspage": {
     "name": "Helix Index Tree",
