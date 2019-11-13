@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/adobe/helix-index-tree/compare/v1.0.0...v1.0.1) (2019-11-13)
+
+
+### Bug Fixes
+
+* **ci:** fix deployment ([dbe3c51](https://github.com/adobe/helix-index-tree/commit/dbe3c51))
+
 # 1.0.0 (2019-11-12)
 
 
