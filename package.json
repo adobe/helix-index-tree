@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/adobe/helix-index-tree#readme",
   "dependencies": {
-    "@adobe/helix-status": "5.3.0",
+    "@adobe/helix-status": "6.0.2",
     "ferrum": "1.4.1",
     "minimatch": "3.0.4",
     "openwhisk": "3.20.0",
