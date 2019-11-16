@@ -1,3 +1,11 @@
+## [1.0.4](https://github.com/adobe/helix-index-tree/compare/v1.0.3...v1.0.4) (2019-11-16)
+
+
+### Bug Fixes
+
+* **ci:** re-adding orb ([6f04ce3](https://github.com/adobe/helix-index-tree/commit/6f04ce3))
+* **deps:** update dependency @adobe/helix-status to v6 ([ca0fa2e](https://github.com/adobe/helix-index-tree/commit/ca0fa2e))
+
 ## [1.0.3](https://github.com/adobe/helix-index-tree/compare/v1.0.2...v1.0.3) (2019-11-14)
 
 
