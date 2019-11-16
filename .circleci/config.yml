@@ -8,7 +8,7 @@ executors:
     working_directory: ~/repo
 
 orbs:
-  helix-post-deploy: adobe/helix-post-deploy@1.1.0
+  helix-post-deploy: adobe/helix-post-deploy@1.2.1
 
 commands:
   setup:
@@ -71,7 +71,10 @@ jobs:
           name: Link Sequences
           command: npm run deploy-sequences
       # disable status monitoring setup until there is support for this kind of project
-      # - helix-post-deploy/monitoring
+      # - helix-post-deploy/monitoring:
+      #     statuspage_name: Helix Index Tree
+      #     statuspage_group: Publishing
+      #     newrelic_group_policy: Publishing Repeated Failure
 
   branch-deploy:
     executor: node10
