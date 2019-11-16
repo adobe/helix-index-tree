@@ -76,12 +76,5 @@
     "ghooks": {
       "pre-commit": "npx lint-staged"
     }
-  },
-  "statuspage": {
-    "name": "Helix Index Tree",
-    "group": "Publishing"
-  },
-  "newrelic": {
-    "group_policy": "Publishing Repeated Failure"
   }
 }
