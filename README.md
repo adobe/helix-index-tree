@@ -15,8 +15,10 @@
 ## Usage
 
 ```bash
-curl https://adobeioruntime.net/api/v1/web/helix-index/helix-services/index-tree@v1
+wsk action invoke helix-services/index-tree@v1
 ```
+
+Other than most Helix Services, this action is not deployed as a web action because it is indended to be invoked by the Helix Bot.
 
 For more, see the [API documentation](docs/API.md).
 
