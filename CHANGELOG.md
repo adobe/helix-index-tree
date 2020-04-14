@@ -1,3 +1,10 @@
+## [1.0.11](https://github.com/adobe/helix-index-tree/compare/v1.0.10...v1.0.11) (2020-04-14)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-status to v7.1.3 ([9da9f11](https://github.com/adobe/helix-index-tree/commit/9da9f1164d9f51586e894cf5fcda7497a1505eeb))
+
 ## [1.0.10](https://github.com/adobe/helix-index-tree/compare/v1.0.9...v1.0.10) (2020-04-14)
 
 
