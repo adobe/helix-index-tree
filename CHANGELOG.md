@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/adobe/helix-index-tree/compare/v1.0.9...v1.0.10) (2020-04-14)
+
+
+### Bug Fixes
+
+* **deploy:** use helix-services package ([#76](https://github.com/adobe/helix-index-tree/issues/76)) ([709ef79](https://github.com/adobe/helix-index-tree/commit/709ef79575745d40a4191dcfa93e8bddff7ff3ce))
+
 ## [1.0.9](https://github.com/adobe/helix-index-tree/compare/v1.0.8...v1.0.9) (2020-02-25)
 
 
