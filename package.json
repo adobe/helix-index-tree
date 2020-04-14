@@ -18,8 +18,7 @@
     "deploy-ci": "wsk-builder -v --deploy  --web-export false --pkgVersion=ci$CIRCLE_BUILD_NUM -l ci"
   },
   "wsk": {
-    "name": "helix-services-private/index-tree@${version}",
-    "linksPackage": "helix-services"
+    "name": "helix-services/index-tree@${version}"
   },
   "repository": {
     "type": "git",
