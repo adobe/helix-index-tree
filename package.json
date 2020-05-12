@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/adobe/helix-index-tree"
+    "url": "https://github.com/adobe/helix-index-tree.git"
   },
   "author": "",
   "license": "Apache-2.0",
