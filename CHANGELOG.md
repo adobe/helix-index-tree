@@ -1,3 +1,11 @@
+## [1.0.12](https://github.com/adobe/helix-index-tree/compare/v1.0.11...v1.0.12) (2020-07-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-status to v8 ([82767ce](https://github.com/adobe/helix-index-tree/commit/82767ce9e26a985d9c1f0b7427a12718f4aee26c))
+* **deps:** update dependency @adobe/helix-status to v8.1.0 ([#113](https://github.com/adobe/helix-index-tree/issues/113)) ([febe622](https://github.com/adobe/helix-index-tree/commit/febe6220dd9d11c4017e288e4dfd28b1adebd280))
+
 ## [1.0.11](https://github.com/adobe/helix-index-tree/compare/v1.0.10...v1.0.11) (2020-04-14)
 
 
